@@ -36,10 +36,10 @@ jobs:
         BENCHMARK_MAX_N: [100]          # Default is 100
         BENCHMARK_NUMBER_SAMPLES: [21]  # Default is 20
         BENCHMARK_SWITCHES: [10]
-        BENCHMARK_MAX_TIME: [5000]      # Default is 5000
+        BENCHMARK_MAX_TIME: [100]      # Default is 5000, using 5000
         # manyCells.ts
         CELLS_MULTIPLIER: [5]           # Default is 100
-        CODE_CELL_RATIO: [0.9, 0.6]     # Default is 0.9
+        CODE_CELL_RATIO: [0.9]          # Default is 0.9
         # manyOutputs.ts
         MANY_OUTPUTS: [100]             # Default is 100
       fail-fast: false
@@ -69,6 +69,7 @@ jobs:
       - name: Install benchmarks
         run: |
           jlpm
+          jlpm run build
       - name: List python dependencies
         run: pip list
       - name: List npm dependencies
@@ -86,7 +87,7 @@ jobs:
           run: jlpm ci
       - name: Remove notebook checkpoints and copy to artifacts folder
         run: |
-          rm -rf notebooks/.ipynb_checkpoints/
+          rm -rf packages/run/notebooks/.ipynb_checkpoints/
       - name: Upload benchmark csv and notebook data artifacts
         uses: actions/upload-artifact@v2
         with:

@@ -38,7 +38,7 @@ jobs:
         BENCHMARK_MAX_N: [100]          # Default is 100
         BENCHMARK_NUMBER_SAMPLES: [21]  # Default is 20
         BENCHMARK_SWITCHES: [10]
-        BENCHMARK_MAX_TIME: [20000]     # Default is 5000
+        BENCHMARK_MAX_TIME: [100]     # Default is 5000, using 20000
         # fixedDataTable.ts
         TABLE_ROWS: [5000]              # Default is 5000
         TABLE_COLUMNS: [50]             # Default is 50
@@ -64,7 +64,7 @@ jobs:
           cd jupyterlab
           git checkout ${{ matrix.JLAB_COMMITS }}
           cd ..
-          python benchmarks/jupyerlab_benchmarks/patch_jlab.py
+          python benchmarks/jupyterlab_benchmarks/patch_jlab.py
           cd jupyterlab
           pip install plotly==4.5.4 ipywidgets==7.5.1
           pip install -e .
@@ -74,8 +74,9 @@ jobs:
         uses: microsoft/playwright-github-action@v1
       - name: Install benchmarks
         run: |
-          python jupyerlab_benchmarks/patch_playwright.py
+          python jupyterlab_benchmarks/patch_playwright.py
           jlpm
+          jlpm run build
       - name: List python dependencies
         run: pip list
       - name: List npm dependencies
@@ -93,7 +94,7 @@ jobs:
           run: jlpm ci
       - name: Remove notebook checkpoints and copy to artifacts folder
         run: |
-          rm -rf notebooks/.ipynb_checkpoints/
+          rm -rf packages/run/notebooks/.ipynb_checkpoints/
       - name: Upload benchmark csv and notebook data artifacts
         uses: actions/upload-artifact@v2
         with:

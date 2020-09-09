@@ -4,7 +4,6 @@ import os
 import subprocess
 
 # Constants
-OUTPUT_DIR = "packages/compare"
 SKIP_FILES = ['package.json', 'package-lock.json', 'tsconfig.json']
 OLD_KEY = os.environ.get("OLD_KEY", "old")
 NEW_KEY = os.environ.get("NEW_KEY", "new")
@@ -13,8 +12,8 @@ KEY_TYPE = os.environ.get("KEY_TYPE", "nokey")
 # Paths
 HERE = os.path.abspath(os.path.dirname(__file__))
 REPO_ROOT = os.path.dirname(os.path.dirname(HERE))
-ANALYSIS_PATH = os.path.join(REPO_ROOT, 'analysis.vl.json')
-COMPARISON_PATH = os.path.join(REPO_ROOT, 'comparison.vl.json')
+ANALYSIS_PATH = os.path.join(REPO_ROOT, "packages", "run", "analysis.vl.json")
+COMPARISON_PATH = os.path.join(REPO_ROOT, "packages", "compare", "comparison.vl.json")
 
 
 def main():
